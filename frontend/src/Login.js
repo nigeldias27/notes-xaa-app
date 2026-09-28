@@ -23,9 +23,11 @@ export default function SignUp() {
                   const queryString = new URLSearchParams({
                     client_id: auth.clientId,
                     response_type: "code",
-                    redirect_uri: "/redirect",
+                    redirect_uri:
+                      "https://notes-xaa-app.onrender.com" + // Should be changed later to ENV var
+                      "/resource/callback",
                     scope: "openid",
-                    state: "state-ndcasicnais-jvojodsi",
+                    state: auth.state,
                   }).toString();
                   window.location.href = `https://${auth.domain}.com/oauth2/v1/authorize?${queryString}`;
                 });

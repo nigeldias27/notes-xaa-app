@@ -123,7 +123,7 @@ def callback():
             updateFile(user_file_path, users)
             return redirect('/home')
 
-@app.route('/resource/issuer', methods = ['GET'])
+@app.route('/resource/token', methods = ['POST'])
 def exchangeIdJag():
     idJag = request.form.get('assertion')
     decoded_payload = jwt.decode(idJag, options={"verify_signature": False})
