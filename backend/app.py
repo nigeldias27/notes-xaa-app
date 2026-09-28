@@ -126,7 +126,10 @@ def callback():
 @app.route('/resource/token', methods = ['POST'])
 def exchangeIdJag():
     idJag = request.form.get('assertion')
+    if not idJag:
+        return jsonify({"error": "Missing assertion"}), 400
     decoded_payload = jwt.decode(idJag, options={"verify_signature": False})
+    print(decoded_payload)
     users = readFile(user_file_path)
     for user in users.values():
         if user['sub'] == decoded_payload['sub']:
@@ -138,6 +141,7 @@ def exchangeIdJag():
      "access_token": accessToken,
      "expires_in": 86400,
    })
+    return jsonify({"error": "Id Jag did not match any user"}), 400
 
 @app.route('/api/notes', methods = ['GET'])
 def getProtectedNotes():
