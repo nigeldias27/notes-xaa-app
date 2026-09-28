@@ -1,12 +1,14 @@
 {
-    "nigel.dias@okta.com": {
-        "user": "nigel.dias@okta.com",
-        "clientId": "clientId",
-        "clientSecret": "clientSecret",
-        "domain": "rain",
-        "notes": [
-            "new note"
-        ],
-        "password": null
+    "test.person@local.com": {
+        "user": "test.person@local.com",
+        "clientId": "",
+        "clientSecret": "",
+        "domain": "",
+        "notes": [],
+        "apps": [],
+        "password": null,
+        "accessToken": "",
+        "state": "",
+        "sub": ""
     }
 }
