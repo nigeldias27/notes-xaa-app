@@ -175,4 +175,4 @@ def updateFile(fileName, data):
 def emptyUserObj(user):
     return {"user": user, "clientId":"", "clientSecret":"","domain":"","notes":[],"apps":[],"password":"","accessToken":"","state":"","sub":""}
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True)
