@@ -118,7 +118,7 @@ def callback():
                                   headers={"accept":"application/json","content-type":"application/x-www-form-urlencoded"},
                                   auth=(user['clientId'],user['clientSecret']))
             decoded_payload = jwt.decode(token.json()["access_token"], options={"verify_signature": False})
-            user["sub"] = decoded_payload["sub"]
+            user["sub"] = decoded_payload["uid"]
             users[email] = user
             updateFile(user_file_path, users)
             return redirect('/home')
@@ -129,13 +129,16 @@ def exchangeIdJag():
     if not idJag:
         return jsonify({"error": "Missing assertion"}), 400
     decoded_payload = jwt.decode(idJag, options={"verify_signature": False})
+    if decoded_payload['aud'] != BASE_URL:
+        return jsonify({"error": "Incorrect audience"}), 400
     print(decoded_payload)
     users = readFile(user_file_path)
-    for user in users.values():
+    for email, user in users.items():
         if user['sub'] == decoded_payload['sub']:
             accessToken = str(uuid.uuid4())
             user['accessToken'] = accessToken
-            updateFile(user_file_path, user)
+            users[email] = user
+            updateFile(user_file_path, users)
             return jsonify({
      "token_type": "Bearer",
      "access_token": accessToken,
