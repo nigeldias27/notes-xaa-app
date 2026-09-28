@@ -87,7 +87,7 @@ def getAuthSettings():
     user = request.args.get("user")
     users = readFile(user_file_path)
     userObj = users[user]
-    userObj['state'] = uuid.uuid4()
+    userObj['state'] = str(uuid.uuid4())
     users[user] = userObj
     updateFile(user_file_path, users)
     return jsonify({
@@ -117,8 +117,7 @@ def callback():
                                   data={"grant_type":"authorization_code","redirect_uri":BASE_URL+"/resource/callback","code":code},
                                   headers={"accept":"application/json","content-type":"application/x-www-form-urlencoded"},
                                   auth=(user['clientId'],user['clientSecret']))
-            user["accessToken"] = token.json()["access_token"]
-            decoded_payload = jwt.decode(user["accessToken"], options={"verify_signature": False})
+            decoded_payload = jwt.decode(token.json()["access_token"], options={"verify_signature": False})
             user["sub"] = decoded_payload["sub"]
             users[email] = user
             updateFile(user_file_path, users)
@@ -131,9 +130,12 @@ def exchangeIdJag():
     users = readFile(user_file_path)
     for user in users.values():
         if user['sub'] == decoded_payload['sub']:
+            accessToken = str(uuid.uuid4())
+            user['accessToken'] = accessToken
+            updateFile(user_file_path, user)
             return jsonify({
      "token_type": "Bearer",
-     "access_token": uuid.uuid4(),
+     "access_token": accessToken,
      "expires_in": 86400,
    })
 
