@@ -17,7 +17,7 @@ app = Flask(
 
 CORS(app)
 user_file_path = "user.json"
-BASE_URL = os.environ.get('BASE_URL', "http://127.0.0.1:5000")
+BASE_URL = "https://notes-xaa-app.onrender.com"
 
 # Check if the file user_file_path exists
 if not os.path.exists(user_file_path):
@@ -113,7 +113,7 @@ def callback():
     users = readFile(user_file_path)
     for email, user in users.items():
         if user['state'] == state:
-            token = requests.post("https://"+user["domain"]+"/oauth2/v1/token",
+            token = requests.post("https://"+user["domain"]+".com/oauth2/v1/token",
                                   data={"grant_type":"authorization_code","redirect_uri":BASE_URL+"/resource/callback","code":code},
                                   headers={"accept":"application/json","content-type":"application/x-www-form-urlencoded"},
                                   auth=(user['clientId'],user['clientSecret']))
