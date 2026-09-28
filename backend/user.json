@@ -1,14 +1,14 @@
 {
-    "test.person@local.com": {
-        "user": "test.person@local.com",
-        "clientId": "",
-        "clientSecret": "",
-        "domain": "",
-        "notes": [],
-        "apps": [],
-        "password": null,
-        "accessToken": "",
-        "state": "",
-        "sub": ""
-    }
+  "test.person@local.com": {
+    "user": "test.person@local.com",
+    "clientId": "",
+    "clientSecret": "",
+    "domain": "",
+    "notes": [],
+    "apps": [],
+    "password": null,
+    "accessToken": "",
+    "state": "",
+    "sub": ""
+  }
 }

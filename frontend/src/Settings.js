@@ -172,7 +172,7 @@ export default function Settings() {
               </div>
               {apps.map((app) => (
                 <Card>
-                  <Typography level="h4">{app.name}</Typography>
+                  <Typography level="h4">{app.appName}</Typography>
                   <Typography>Client Id: {app.clientId}</Typography>
                   <Typography>Client Secret: {app.clientSecret}</Typography>
                 </Card>

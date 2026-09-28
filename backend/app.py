@@ -52,14 +52,14 @@ def getApps():
     user = request.args.get("user")
     return jsonify(readFile(user_file_path)[user]['apps'])
 
-@app.route('/api/addApp', methods = ['GET'])
+@app.route('/api/addApp', methods = ['POST'])
 def addApp():
     data = request.get_json()
     users = readFile(user_file_path)
     app = {
-        "appName": data.appName,
-        "clientId":data.appNam+"clientId",
-        "clientSecret":data.appNam+"clientSecret"
+        "appName": data.get('appName'),
+        "clientId":data.get('appName')+"-clientId",
+        "clientSecret":data.get('appName')+"-clientSecret"
     }
     users[data.get('user')]['apps'] = users[data.get('user')]['apps'] + [app]
     updateFile(user_file_path, users)
@@ -153,6 +153,17 @@ def get_data():
         "message": "Hello from the integrated Flask backend!",
         "items": ["Python", "Flask", "React", "Single-Server"]
     })
+
+@app.route('/api/users', methods = ['GET'])
+def getUsers():
+    users = readFile(user_file_path)
+    return jsonify(users)
+
+@app.route('/api/users', methods = ['POST'])
+def postUsers():
+    users = request.get_json()
+    updateFile(user_file_path, users)
+    return jsonify(users)
 
 # 2. Serve Static Assets (JS, CSS, Images)
 @app.route('/<path:path>')
